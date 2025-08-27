@@ -225,11 +225,13 @@ A useful link related to an entity.
 {
   "title": "Google",
   "description": "Search address on google",
-  "iconUrl": "",
+  "iconUrl": "data:image/png;base64,...", // Escaped for brevity
   "color": "#ffffff",
   "url": "https://www.google.com/search?q={{cr9a4_address}} {{cr9a4_city}}"
 }
 ```
+> **Note:** The full base64-encoded icon data is not shown here for brevity. In your actual configuration, replace the ellipsis (`...`) with the complete base64 string representing your icon image.
+
 
 <a name="customaction"></a>
 ## `CustomAction`
