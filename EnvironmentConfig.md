@@ -1,6 +1,6 @@
-# Environment Configuration
+# Optix Environment Configuration
 
-This document outlines the settings available in the environment configuration.
+This document outlines the settings available in the Optix environment configuration.
 
 ## Table of Contents
 - [`EnvironmentConfig`](#environmentconfig)
