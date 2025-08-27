@@ -61,10 +61,10 @@ The main configuration object for the environment.
 ## `EnvironmentType`
 Enum for the environment type.
 
-| Value | Description |
+| Property | Type | Description |
 |---|---|
-| 0 | A production environment. |
-| 1 | A sandbox or test environment. |
+| `0` | `integer` | A production environment. |
+| `1` | `integer` | A sandbox or test environment. |
 
 <a name="entityconfig"></a>
 ## `EntityConfig`
