@@ -61,7 +61,7 @@ The main configuration object for the environment.
 ## `EnvironmentType`
 Enum for the environment type.
 
-| Property | Type | Description |
+| Value | Description |
 |---|---|
 | `0` | A production environment. |
 | `1` | A sandbox or test environment. |
