@@ -220,6 +220,17 @@ A useful link related to an entity.
 | `color` | `string` (optional) | A color associated with the link. |
 | `url` | `string` | The URL of the link. |
 
+**Example:**
+```json
+{
+  "title": "Google",
+  "description": "Search address on google",
+  "iconUrl": "",
+  "color": "#ffffff",
+  "url": "https://www.google.com/search?q={{cr9a4_address}} {{cr9a4_city}}"
+}
+```
+
 <a name="customaction"></a>
 ## `CustomAction`
 A custom action that can be performed.
