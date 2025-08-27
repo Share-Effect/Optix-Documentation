@@ -63,8 +63,8 @@ Enum for the environment type.
 
 | Value | Description |
 |---|---|
-| `Production` | A production environment. |
-| `Sandbox` | A sandbox or test environment. |
+| 0 | A production environment. |
+| 1 | A sandbox or test environment. |
 
 <a name="entityconfig"></a>
 ## `EntityConfig`
