@@ -6,13 +6,13 @@ This document outlines the settings available in the Optix environment configura
 - [`EnvironmentConfig`](#environmentconfig)
 - [`EnvironmentType`](#environmenttype)
 - [`EntityConfig`](#entityconfig)
-- [`SaveLocationReference`](#savelocationreference)
+- [`DocumentLibraryReference`](#documentlibraryreference)
 - [`CaseListReference`](#caselistreference)
 - [`TaskListReference`](#tasklistreference)
 - [`DropOffLocation`](#dropofflocation)
 - [`SearchScope`](#searchscope)
 - [`LifeCycleListReference`](#lifecyclelistreference)
-- [`KnowledgeBaseSite`](#knowledgebasesite)
+- [`KnowlegdebaseSite`](#knowlegdebasesite)
 - [`Datasource`](#datasource)
 - [`ListReference`](#listreference)
 - [`App`](#app)
@@ -47,13 +47,13 @@ The main configuration object for the environment.
 | `productName` | `string` (optional) | The name of the product to display. |
 | `productDescription` | `string` (optional) | The description of the product to display. |
 | `entities` | [`EntityConfig[]`](#entityconfig) | Configuration for data entities. |
-| `documentLibraries` | [`SaveLocationReference[]`](#savelocationreference) | Document libraries to save new documents to. |
+| `documentLibraries` | [`DocumentLibraryReference[]`](#documentlibraryreference) | Document libraries to save new documents to. |
 | `caseLists` | [`CaseListReference[]`](#caselistreference) | Lists that contain cases. |
 | `taskLists` | [`TaskListReference[]`](#tasklistreference) | Lists that contain tasks. |
 | `dropOffLocations` | [`DropOffLocation[]`](#dropofflocation) | Specific locations for document drop-off. |
 | `searchScopes` | [`SearchScope[]`](#searchscope) | Defines search scopes for the homepage. |
 | `lifeCycleLists` | [`LifeCycleListReference[]`](#lifecyclelistreference) | Lists for lifecycle management. |
-| `knowdledgeBaseSites` | [`KnowledgeBaseSite[]`](#knowledgebasesite) | Sites that act as knowledge bases. |
+| `knowlegdeBaseSites` | [`KnowlegdebaseSite[]`](#knowlegdebasesite) | Sites that act as knowledge bases. |
 | `settings` | `any` (optional) | General settings for the application. |
 | `theme` | `any` (optional) | Theme for the application. |
 
@@ -81,7 +81,7 @@ Configuration for a single data entity.
 | `infoLists` | [`ListReference[]`](#listreference) | References to lists containing additional information. |
 | `noteLists` | [`ListReference[]`](#listreference) | References to lists for notes. |
 | `caseLists` | [`ListReference[]`](#listreference) | References to lists for cases related to this entity. |
-| `documentLibraries` | [`SaveLocationReference[]`](#savelocationreference) | Locations where documents for this entity can be saved. |
+| `documentLibraries` | [`ListReference[]`](#listreference) | Locations where documents for this entity can be saved. |
 | `apps` | [`App[]`](#app) | Power Apps associated with this entity. |
 | `links` | [`Link[]`](#link) | Useful links related to this entity. |
 | `documentTemplateLibraries` | [`ListReference[]`](#listreference) (optional) | Libraries containing document templates. |
@@ -90,16 +90,18 @@ Configuration for a single data entity.
 | `customSearchResultFields` | [`DatasourceDisplayField[]`](#datasourcedisplayfield) (optional) | Custom fields to display in search results. |
 | `settings` | `any` (optional) | Entity-specific settings. |
 
-<a name="savelocationreference"></a>
-## `SaveLocationReference`
-Reference to a location (document library) where documents can be saved.
+<a name="documentlibraryreference"></a>
+## `DocumentLibraryReference`
+Reference to a document library where documents can be saved.
 
 | Property | Type | Description |
 |---|---|---|
 | `groupId` | `string` | The ID of the SharePoint group (site). |
 | `listId` | `string` | The ID of the document library. |
 | `hideAddButton` | `boolean` (optional) | If true, hides the 'Add' button in the UI. |
-| `customActions` | [`CustomAction[]`](#customaction) (optional) | Custom actions for this save location. |
+| `customActions` | [`CustomAction[]`](#customaction) (optional) | Custom actions for this library. |
+| `customSearchResultRefiners` | [`CustomSearchResultRefiner[]`](#customsearchresultrefiner) (optional) | Custom refiners for search. |
+| `customSearchResultFields` | [`DatasourceDisplayField[]`](#datasourcedisplayfield) (optional) | Custom fields to display in search. |
 
 <a name="caselistreference"></a>
 ## `CaseListReference`
@@ -123,7 +125,9 @@ Reference to a SharePoint list that contains tasks.
 |---|---|---|
 | `groupId` | `string` | The ID of the SharePoint group (site). |
 | `listId` | `string` | The ID of the task list. |
+| `assignedToMeOptions` | [`AssignedToMeOptions`](#assignedtomeoptions) (optional) | Options for the 'Assigned to Me' view. |
 | `powerAppId` | `string` (optional) | The ID of a Power App to use for this task list. |
+| `documentReferenceField` | `string` (optional) | Field that stores the document reference. |
 
 <a name="dropofflocation"></a>
 ## `DropOffLocation`
@@ -158,8 +162,8 @@ Reference to a list for lifecycle management.
 | `listId` | `string` | The ID of the lifecycle list. |
 | `actions` | [`LifeCycleItemAction[]`](#lifecycleitemaction) | Actions available for items in this list. |
 
-<a name="knowledgebasesite"></a>
-## `KnowledgeBaseSite`
+<a name="knowlegdebasesite"></a>
+## `KnowlegdebaseSite`
 A site that acts as a knowledge base.
 
 | Property | Type | Description |
@@ -179,6 +183,7 @@ Defines a data source for an entity.
 | `returnedProperties` | [`returnedProperty[]`](#returnedproperty) | Properties returned for searching and auto-filling fields. |
 | `groupId` | `string` (optional) | SharePoint group ID. |
 | `listId` | `string` (optional) | SharePoint list ID. |
+| `hostName` | `string` (optional) | Dataverse host name. |
 | `entityName` | `string` (optional) | Dataverse entity name. |
 | `displayProperty` | `string` (optional) | Property to display for Graph Connector results. |
 | `connectionId` | `string` (optional) | Graph Connector connection ID. |
@@ -225,13 +230,12 @@ A useful link related to an entity.
 {
   "title": "Google",
   "description": "Search address on google",
-  "iconUrl": "data:image/png;base64,...", // Escaped for brevity
+  "iconUrl": "data:image/png;base64,...",
   "color": "#ffffff",
   "url": "https://www.google.com/search?q={{cr9a4_address}} {{cr9a4_city}}"
 }
 ```
-> **Note:** The full base64-encoded icon data is not shown here for brevity. In your actual configuration, replace the ellipsis (`...`) with the complete base64 string representing your icon image.
-
+> Note: The full base64-encoded icon data is not shown here for brevity. In your actual configuration, replace the ellipsis (...) with the complete base64 string representing your icon image.
 
 <a name="customaction"></a>
 ## `CustomAction`
@@ -301,7 +305,6 @@ A property returned from a datasource search.
 | `returnProperty` | `string` | The property to return. |
 | `autoFillFieldNames` | `string[]` (optional) | Fields to auto-fill with this property's value. |
 | `managedProperty` | `string` | The corresponding managed property. |
-| `value` | `any` (optional) | The value of the property. |
 
 <a name="datasourcelookupfield"></a>
 ## `DatasourceLookupField`
@@ -349,6 +352,6 @@ A reference to a specific list item.
 
 | Property | Type | Description |
 |---|---|---|
-| `webUrl` | `string` | The URL of the SharePoint web. |
+| `groupId` | `string` | The ID of the SharePoint group (site). |
 | `listId` | `string` | The ID of the list. |
 | `listItemId` | `number` | The ID of the list item. |
